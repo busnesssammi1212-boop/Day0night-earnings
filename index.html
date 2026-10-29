@@ -89,10 +89,6 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0;text-alig
 <footer><div class="wrap">© <span id="yr"></span> Day Night Earnings</div></footer>
 
 <script>
-// ---- CONFIG: set these from your approved offerwall provider ----
-// OFFERWALL_URL: the provider’s official embed URL. Use {sub} where it expects a tracking ID.
-var OFFERWALL_URL = ""; // e.g. "https://provider.example/wall?app=YOUR_APP_ID&sub_id={sub}"
-
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 // Anonymous guest tracking ID (only if your provider supports guest/anonymous tracking)
@@ -109,15 +105,16 @@ function guestId(){
 }
 
 var frame=document.getElementById('frame');
-if(OFFERWALL_URL){
-  var f=document.createElement('iframe');
-  f.src=OFFERWALL_URL.replace('{sub}',encodeURIComponent(guestId()));
-  f.title='Offers'; f.loading='lazy';
-  f.referrerPolicy='no-referrer-when-downgrade';
-  frame.appendChild(f);
-}else{
-  frame.innerHTML='<div class="empty"><p><strong>Offerwall not connected yet.</strong></p><p>Set <code>OFFERWALL_URL</code> in the page script to your approved provider’s embed link.</p></div>';
-}
+function showError(){frame.innerHTML='<div class="empty"><p><strong>Offers are unavailable right now.</strong></p><p>Please try again in a moment.</p></div>';}
+fetch('/api/offerwall-url?uid='+encodeURIComponent(guestId()),{cache:'no-store'})
+ .then(function(r){return r.json()})
+ .then(function(d){
+   if(!d||!d.url){showError();return;}
+   var f=document.createElement('iframe');
+   f.src=d.url;f.title='Offers';f.loading='lazy';
+   f.referrerPolicy='no-referrer-when-downgrade';
+   frame.appendChild(f);
+ }).catch(showError);
 
 var cats=[["📱","App installs","Try new apps and reach a level."],["📝","Surveys","Share opinions on short surveys."],["🎮","Games","Reach milestones in featured games."],["🎬","Watch &amp; learn","Short videos and trials."]];
 var g=document.getElementById('cats');
