@@ -82,6 +82,7 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0;text-alig
 
 <section id="rewards" class="wrap">
 <h2>Rewards &amp; withdrawals</h2>
+<div class="grid" style="margin-bottom:14px"><div class="card"><h3 id="bavail">0 Points</h3><p>Available</p></div><div class="card"><h3 id="bpend">0 Points</h3><p>Pending (verification hold)</p></div></div>
 <div class="note">Only verified rewards are counted. Reward amounts come from the provider’s confirmation, never from your browser. Browsing is always free of login. If a withdrawal needs to confirm who you are or where to pay, we ask for only that information at that step, and payout options depend on the provider and payout method.</div>
 </section>
 </main>
@@ -116,6 +117,8 @@ fetch('/api/offerwall-url?uid='+encodeURIComponent(guestId()),{cache:'no-store'}
    frame.appendChild(f);
  }).catch(showError);
 
+function loadBal(){fetch('/api/balance?uid='+encodeURIComponent(guestId()),{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){if(d&&d.available!==undefined){document.getElementById('bavail').textContent=Math.floor(d.available).toLocaleString()+' Points';document.getElementById('bpend').textContent=Math.floor(d.pending).toLocaleString()+' Points';}}).catch(function(){});}
+loadBal();setInterval(loadBal,60000);
 var cats=[["📱","App installs","Try new apps and reach a level."],["📝","Surveys","Share opinions on short surveys."],["🎮","Games","Reach milestones in featured games."],["🎬","Watch &amp; learn","Short videos and trials."]];
 var g=document.getElementById('cats');
 cats.forEach(function(c){
