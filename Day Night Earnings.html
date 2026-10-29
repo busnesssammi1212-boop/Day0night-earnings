@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Day Night Earnings</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#05060f;--navy:#0a1030;--card:#0d1438;--text:#e8ebff;--muted:#8d95c4;--purple:#a855f7;--blue:#2dd4ff;--line:rgba(120,140,255,.18)}
+html{scroll-padding-top:70px;scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1000px 500px at 80% -10%,rgba(168,85,247,.22),transparent),radial-gradient(900px 500px at 0% 10%,rgba(45,212,255,.15),transparent),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:rgba(5,6,15,.75);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;letter-spacing:.3px}
+.logo span{background:linear-gradient(90deg,var(--purple),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--muted)}
+nav a:hover{color:var(--blue)}
+.hero{text-align:center;padding:64px 0 36px}
+h1{font-size:clamp(2.3rem,8vw,4.4rem);margin:0 0 12px;line-height:1.05;background:linear-gradient(90deg,var(--purple),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;animation:glow 4s ease-in-out infinite alternate}
+@keyframes glow{from{filter:drop-shadow(0 0 6px rgba(168,85,247,.35))}to{filter:drop-shadow(0 0 18px rgba(45,212,255,.45))}}
+.hero p{color:var(--muted);max-width:560px;margin:0 auto 24px}
+.btn{display:inline-block;padding:12px 24px;border-radius:12px;font-weight:700;border:0;cursor:pointer;color:#fff;background:linear-gradient(90deg,var(--purple),#3b82f6);box-shadow:0 0 22px rgba(168,85,247,.4);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(45,212,255,.5)}
+section{padding:36px 0}
+h2{font-size:1.5rem;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 20px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:linear-gradient(160deg,var(--card),var(--navy));border:1px solid var(--line);border-radius:16px;padding:18px;transition:transform .25s,border-color .25s,box-shadow .25s;opacity:0;transform:translateY(14px)}
+.card.in{opacity:1;transform:none}
+.card:hover{transform:translateY(-4px);border-color:var(--purple);box-shadow:0 8px 30px rgba(168,85,247,.25)}
+.ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:rgba(45,212,255,.1);margin-bottom:10px}
+.card h3{margin:0 0 4px;font-size:1.05rem}
+.card p{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+.tag{font-size:11px;color:var(--blue);border:1px solid rgba(45,212,255,.4);padding:2px 8px;border-radius:99px}
+.frame{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--navy);min-height:200px}
+.frame iframe{width:100%;height:80vh;min-height:520px;border:0;display:block}
+.empty{padding:36px 20px;text-align:center;color:var(--muted)}
+.empty code{color:var(--blue)}
+.steps{counter-reset:s}
+.steps .card::before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(90deg,var(--purple),var(--blue));color:#05060f;font-weight:800;margin-bottom:8px}
+.note{border-left:3px solid var(--purple);background:rgba(168,85,247,.08);padding:12px 16px;border-radius:8px;color:var(--muted);font-size:14px}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:560px){nav ul{gap:12px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="logo" href="#top">Day Night <span>Earnings</span></a>
+<ul><li><a href="#offers">Offers</a></li><li><a href="#how">How it works</a></li><li><a href="#rewards">Rewards</a></li></ul></div></nav>
+
+<main id="top">
+<header class="hero wrap">
+<h1>Day Night Earnings</h1>
+<p>Complete offers any time, day or night. No sign-up, no login. Just open an offer and start.</p>
+<a class="btn" href="#offers">Browse offers</a>
+</header>
+
+<section id="offers" class="wrap">
+<h2>Available offers</h2>
+<p class="sub">Offers are provided by our offerwall partner and open right here.</p>
+<div class="frame" id="frame"></div>
+</section>
+
+<section id="featured" class="wrap">
+<h2>Offer categories</h2>
+<p class="sub">Typical offer types you will find in the wall.</p>
+<div class="grid" id="cats"></div>
+</section>
+
+<section id="how" class="wrap">
+<h2>How it works</h2>
+<p class="sub">Three simple steps.</p>
+<div class="grid steps">
+<div class="card"><h3>Pick an offer</h3><p>Choose any offer from the wall. No account needed.</p></div>
+<div class="card"><h3>Complete it</h3><p>Follow the offer’s instructions in full.</p></div>
+<div class="card"><h3>Get verified</h3><p>Rewards appear only after the provider confirms your completion.</p></div>
+</div>
+</section>
+
+<section id="rewards" class="wrap">
+<h2>Rewards &amp; withdrawals</h2>
+<div class="note">Only verified rewards are counted. Reward amounts come from the provider’s confirmation, never from your browser. Browsing is always free of login. If a withdrawal needs to confirm who you are or where to pay, we ask for only that information at that step, and payout options depend on the provider and payout method.</div>
+</section>
+</main>
+
+<footer><div class="wrap">© <span id="yr"></span> Day Night Earnings</div></footer>
+
+<script>
+// ---- CONFIG: set these from your approved offerwall provider ----
+// OFFERWALL_URL: the provider’s official embed URL. Use {sub} where it expects a tracking ID.
+var OFFERWALL_URL = ""; // e.g. "https://provider.example/wall?app=YOUR_APP_ID&sub_id={sub}"
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Anonymous guest tracking ID (only if your provider supports guest/anonymous tracking)
+function guestId(){
+  var k='dne_guest', id=null;
+  try{ id=localStorage.getItem(k); }catch(e){}
+  if(!id){
+    var a=new Uint8Array(12);
+    (window.crypto||{getRandomValues:function(x){for(var i=0;i<x.length;i++)x[i]=Math.random()*256}}).getRandomValues(a);
+    id='g_'+Array.prototype.map.call(a,function(b){return ('0'+b.toString(16)).slice(-2)}).join('');
+    try{ localStorage.setItem(k,id); }catch(e){}
+  }
+  return id;
+}
+
+var frame=document.getElementById('frame');
+if(OFFERWALL_URL){
+  var f=document.createElement('iframe');
+  f.src=OFFERWALL_URL.replace('{sub}',encodeURIComponent(guestId()));
+  f.title='Offers'; f.loading='lazy';
+  f.referrerPolicy='no-referrer-when-downgrade';
+  frame.appendChild(f);
+}else{
+  frame.innerHTML='<div class="empty"><p><strong>Offerwall not connected yet.</strong></p><p>Set <code>OFFERWALL_URL</code> in the page script to your approved provider’s embed link.</p></div>';
+}
+
+var cats=[["📱","App installs","Try new apps and reach a level."],["📝","Surveys","Share opinions on short surveys."],["🎮","Games","Reach milestones in featured games."],["🎬","Watch &amp; learn","Short videos and trials."]];
+var g=document.getElementById('cats');
+cats.forEach(function(c){
+  var d=document.createElement('div'); d.className='card';
+  d.innerHTML='<div class="ico">'+c[0]+'</div><h3>'+c[1]+'</h3><p>'+c[2]+'</p><span class="tag">Via offerwall</span>';
+  g.appendChild(d);
+});
+var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1}):null;
+document.querySelectorAll('.card').forEach(function(c){io?io.observe(c):c.classList.add('in')});
+</script>
+</body>
+</html>
